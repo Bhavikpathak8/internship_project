@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 - Hello World Express Server | Blog System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.35);
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.3);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        button.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            box-shadow: none;
+        }
+
+        button.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .console-output {
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #38bdf8;
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 1rem;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            color: var(--text-sub);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.875rem;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">
+                <span class="pulse-dot"></span>
+                Day 1 Task Completed - Server Active
+            </div>
+            <h1>Full Stack Internship: Day 1</h1>
+            <p class="subtitle">Simple Blog Management System — Environment Setup & Express Hello World</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Interactive API Tester</span>
+                    <span class="icon">⚡</span>
+                </div>
+                <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Test live backend endpoints created during Day 1 tasks.
+                </p>
+                <div class="btn-group">
+                    <button onclick="fetchAPI('/api')">GET /api</button>
+                    <button class="secondary" onclick="fetchAPI('/api/hello')">GET /api/hello</button>
+                    <button class="secondary" onclick="fetchAPI('/api/status')">GET /api/status</button>
+                </div>
+                <div class="console-output" id="output">Click an API endpoint button above to test server response...</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Day 1 Checklist</span>
+                    <span class="icon">📋</span>
+                </div>
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        VS Code, Node.js & Git setup
+                    </li>
+                    <li class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        Initialize Project (`package.json`)
+                    </li>
+                    <li class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        Install Express Framework
+                    </li>
+                    <li class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        Create & Run Hello World Server
+                    </li>
+                    <li class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        Initialize Git Repository & `.gitignore`
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+                <span class="card-title">Postman & Submission Details</span>
+                <span class="icon">📮</span>
+            </div>
+            <p style="color: var(--text-sub); font-size: 0.95rem; line-height: 1.6;">
+                <strong>Test Endpoint:</strong> <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 0.3rem;">GET http://localhost:5000/api</code><br>
+                <strong>Expected Output:</strong> JSON response with status <code>"Success"</code> and Hello World message.<br>
+                <strong>Google Form Submission:</strong> You can submit your Git repository link or server screenshot as required by today's task.
+            </p>
+        </div>
+
+        <footer>
+            Full Stack Web Development Internship &bull; Simple Blog Management System
+        </footer>
+    </div>
+
+    <script>
+        async function fetchAPI(endpoint) {
+            const output = document.getElementById('output');
+            output.innerText = `Fetching ${endpoint}...`;
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                output.innerText = JSON.stringify(data, null, 2);
+            } catch (err) {
+                output.innerText = `Error: ${err.message}`;
+            }
+        }
+
+        // Auto load /api status on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchAPI('/api');
+        });
+    </script>
+</body>
+</html>

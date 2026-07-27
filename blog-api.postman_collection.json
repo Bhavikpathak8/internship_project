@@ -1,0 +1,69 @@
+{
+    "info": {
+        "_postman_id": "day1-express-hello-world",
+        "name": "Day 1 - Blog Management System API",
+        "description": "Postman Collection for Day 1 Environment Setup & Hello World Express Server",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GET Hello World Root",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/api",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET Hello Greeting",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/api/hello",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api",
+                        "hello"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET Server Status",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5000/api/status",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5000",
+                    "path": [
+                        "api",
+                        "status"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
