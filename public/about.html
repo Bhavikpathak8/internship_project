@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Simple Blog Management System</title>
+    <meta name="description"
+        content="About the Simple Blog Management System built during the Full Stack Web Development Internship.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo" id="nav-brand">
+                <span class="brand-icon">📝</span>
+                BlogSphere
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+                    <li><a href="add-blog.html" class="nav-link" id="nav-add-blog">Add Blog</a></li>
+                    <li><a href="about.html" class="nav-link active" id="nav-about">About</a></li>
+                    <li><a href="add-blog.html" class="nav-btn" id="nav-btn-create">+ Create Post</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <section class="hero" style="margin-bottom: 2rem;">
+            <div class="hero-badge">
+                <span>📌</span> Internship Overview
+            </div>
+            <h1 class="hero-title">About Simple Blog Management System</h1>
+            <p class="hero-desc">
+                Developed as part of the Full Stack Web Development Internship to demonstrate clean code, RESTful API
+                architecture, HTML5 semantics, and modern responsive web design.
+            </p>
+        </section>
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.75rem; border-radius: var(--radius-lg);">
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #a5b4fc;">
+                    Day 1 – Setup Completed</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Configured VS Code, Node.js, Express server, Git version control, and Postman API testing
+                    collection.
+                </p>
+            </div>
+
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.75rem; border-radius: var(--radius-lg);">
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #a5b4fc;">
+                    Day 2 – HTML & UI Structure</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Crafted semantic HTML5 Home page, Add Blog page, responsive navigation bar, and clean multi-column
+                    footer.
+                </p>
+            </div>
+
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.75rem; border-radius: var(--radius-lg);">
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #a5b4fc;">
+                    GitHub Repository</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                    Hosted on GitHub profile <strong>Bhavikpathak8</strong> in <code>internship_project</code>
+                    repository.
+                </p>
+                <a href="https://github.com/Bhavikpathak8/internship_project" target="_blank" class="btn btn-primary"
+                    style="display: inline-block; font-size: 0.85rem; padding: 0.5rem 1rem;">View on GitHub &rarr;</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="brand-logo">
+                    <span class="brand-icon">📝</span>
+                    BlogSphere
+                </a>
+                <p class="footer-desc">
+                    Simple Blog Management System built during the Full Stack Web Development Internship program.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link">Home Page</a></li>
+                    <li><a href="add-blog.html" class="footer-link">Add New Blog</a></li>
+                    <li><a href="about.html" class="footer-link">About Project</a></li>
+                    <li><a href="/api" class="footer-link" target="_blank">Express API (/api)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Developer</h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Bhavikpathak8" class="footer-link" target="_blank">GitHub
+                            Profile</a></li>
+                    <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
+                            target="_blank">GitHub Repository</a></li>
+                    <li><span class="footer-link">Day 2 Task — Completed</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
+            <p>Designed with Semantic HTML5 & Custom CSS</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

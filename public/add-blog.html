@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blog | Simple Blog Management System</title>
+    <meta name="description"
+        content="Day 2 Internship Task: Create New Blog Post Form page for Simple Blog Management System.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo" id="nav-brand">
+                <span class="brand-icon">📝</span>
+                BlogSphere
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link" id="nav-home">Home</a></li>
+                    <li><a href="add-blog.html" class="nav-link active" id="nav-add-blog">Add Blog</a></li>
+                    <li><a href="about.html" class="nav-link" id="nav-about">About</a></li>
+                    <li><a href="add-blog.html" class="nav-btn" id="nav-btn-create">+ Create Post</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <section class="form-container">
+            <div class="form-header">
+                <h1 class="form-title">Create New Blog Post</h1>
+                <p class="form-subtitle">Fill in the details below to add a new article to the Blog Management System.
+                </p>
+            </div>
+
+            <!-- Add Blog Form -->
+            <form id="create-blog-form" action="#" method="POST">
+                <div class="form-grid">
+
+                    <!-- Blog Title -->
+                    <div class="form-group full-width">
+                        <label for="blog-title">Blog Title *</label>
+                        <input type="text" id="blog-title" name="title"
+                            placeholder="e.g., Master Express.js Routes & Middleware" required>
+                    </div>
+
+                    <!-- Author Name -->
+                    <div class="form-group">
+                        <label for="blog-author">Author Name *</label>
+                        <input type="text" id="blog-author" name="author" placeholder="e.g., Bhavik Pathak" required>
+                    </div>
+
+                    <!-- Category Dropdown -->
+                    <div class="form-group">
+                        <label for="blog-category">Category *</label>
+                        <select id="blog-category" name="category" required>
+                            <option value="" disabled selected>Select category...</option>
+                            <option value="Web Dev">Web Development</option>
+                            <option value="Backend">Backend Architecture</option>
+                            <option value="Node.js">Node.js</option>
+                            <option value="Express">Express.js</option>
+                            <option value="General">General Tech</option>
+                        </select>
+                    </div>
+
+                    <!-- Image URL -->
+                    <div class="form-group full-width">
+                        <label for="blog-image">Banner Image URL</label>
+                        <input type="url" id="blog-image" name="imageUrl"
+                            placeholder="https://images.unsplash.com/... or images/web_dev.png">
+                    </div>
+
+                    <!-- Short Excerpt / Summary -->
+                    <div class="form-group full-width">
+                        <label for="blog-excerpt">Short Summary / Excerpt *</label>
+                        <input type="text" id="blog-excerpt" name="excerpt"
+                            placeholder="A concise 1-2 sentence overview of your post..." required>
+                    </div>
+
+                    <!-- Full Blog Content -->
+                    <div class="form-group full-width">
+                        <label for="blog-content">Full Blog Article Content *</label>
+                        <textarea id="blog-content" name="content"
+                            placeholder="Write your complete blog post content here using text or paragraphs..."
+                            required></textarea>
+                    </div>
+
+                </div>
+
+                <!-- Form Action Buttons -->
+                <div class="form-actions">
+                    <button type="reset" class="btn btn-secondary">Reset Fields</button>
+                    <button type="submit" class="btn btn-primary">Publish Article</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="brand-logo">
+                    <span class="brand-icon">📝</span>
+                    BlogSphere
+                </a>
+                <p class="footer-desc">
+                    Simple Blog Management System built during the Full Stack Web Development Internship program.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link">Home Page</a></li>
+                    <li><a href="add-blog.html" class="footer-link">Add New Blog</a></li>
+                    <li><a href="about.html" class="footer-link">About Project</a></li>
+                    <li><a href="/api" class="footer-link" target="_blank">Express API (/api)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Developer</h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Bhavikpathak8" class="footer-link" target="_blank">GitHub
+                            Profile</a></li>
+                    <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
+                            target="_blank">GitHub Repository</a></li>
+                    <li><span class="footer-link">Day 2 Task — Completed</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
+            <p>Designed with Semantic HTML5 & Custom CSS</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

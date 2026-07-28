@@ -20,6 +20,15 @@ app.use((req, res, next) => {
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// HTML Page Routes
+app.get('/add-blog', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'add-blog.html'));
+});
+
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'about.html'));
+});
+
 // Root Endpoint - Hello World Response
 app.get('/api', (req, res) => {
     res.json({

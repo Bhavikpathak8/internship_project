@@ -1,314 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 1 - Hello World Express Server | Blog System</title>
+    <title>Home | Simple Blog Management System</title>
+    <meta name="description"
+        content="Day 2 Internship Task: Simple Blog Management System - Home page with navigation bar, blog grid, and footer.">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --accent: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.35);
-            --success: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.3);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-primary);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 900px;
-            width: 100%;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: var(--success);
-            padding: 0.4rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--success);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        p.subtitle {
-            color: var(--text-sub);
-            font-size: 1.1rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #f1f5f9;
-        }
-
-        .icon {
-            font-size: 1.5rem;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 0.5rem;
-            font-family: inherit;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 14px var(--accent-glow);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--accent-glow);
-            filter: brightness(1.1);
-        }
-
-        button.secondary {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border);
-            box-shadow: none;
-        }
-
-        button.secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .console-output {
-            background: #090d16;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: #38bdf8;
-            max-height: 250px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            margin-top: 1rem;
-        }
-
-        .checklist {
-            list-style: none;
-        }
-
-        .checklist-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.95rem;
-            color: var(--text-sub);
-        }
-
-        .checklist-item:last-child {
-            border-bottom: none;
-        }
-
-        .check-icon {
-            width: 20px;
-            height: 20px;
-            background: rgba(16, 185, 129, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--success);
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        footer {
-            margin-top: auto;
-            text-align: center;
-            color: var(--text-sub);
-            font-size: 0.875rem;
-            padding: 1rem;
-        }
-    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=display"
+        rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <div class="badge">
-                <span class="pulse-dot"></span>
-                Day 1 Task Completed - Server Active
-            </div>
-            <h1>Full Stack Internship: Day 1</h1>
-            <p class="subtitle">Simple Blog Management System — Environment Setup & Express Hello World</p>
-        </header>
 
-        <div class="grid">
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Interactive API Tester</span>
-                    <span class="icon">⚡</span>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo" id="nav-brand">
+                <span class="brand-icon">📝</span>
+                BlogSphere
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active" id="nav-home">Home</a></li>
+                    <li><a href="add-blog.html" class="nav-link" id="nav-add-blog">Add Blog</a></li>
+                    <li><a href="about.html" class="nav-link" id="nav-about">About</a></li>
+                    <li><a href="add-blog.html" class="nav-btn" id="nav-btn-create">+ Create Post</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span>🚀</span> Full Stack Internship — Day 2 HTML Task
+            </div>
+            <h1 class="hero-title">Discover Tech Insights & Modern Full-Stack Ideas</h1>
+            <p class="hero-desc">
+                Welcome to the Simple Blog Management System. Explore curated articles on frontend development, REST
+                APIs, Node.js architecture, and full-stack engineering.
+            </p>
+            <div class="hero-actions">
+                <a href="add-blog.html" class="btn btn-primary">Publish New Article</a>
+                <a href="#blog-posts" class="btn btn-secondary" style="margin-left: 0.75rem;">Explore Posts</a>
+            </div>
+        </section>
+
+        <!-- Blog Posts Section -->
+        <section id="blog-posts">
+            <div class="section-header">
+                <h2 class="section-title">Latest Blog Articles</h2>
+                <div class="categories">
+                    <span class="category-chip active">All</span>
+                    <span class="category-chip">Web Dev</span>
+                    <span class="category-chip">Backend</span>
+                    <span class="category-chip">Node.js</span>
+                    <span class="category-chip">Express</span>
                 </div>
-                <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1rem;">
-                    Test live backend endpoints created during Day 1 tasks.
+            </div>
+
+            <!-- Blog Posts Grid -->
+            <div class="blog-grid" id="posts-container">
+
+                <!-- Blog Card 1 -->
+                <article class="blog-card" id="blog-card-1">
+                    <img src="images/web_dev.png" alt="Web Development" class="card-banner">
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-tag">Web Dev</span>
+                            <time datetime="2026-07-27">July 27, 2026</time>
+                            <span>&bull; 5 min read</span>
+                        </div>
+                        <h3 class="card-title">Getting Started with Full Stack Web Development</h3>
+                        <p class="card-excerpt">
+                            Learn how modern frontend interfaces communicate seamlessly with backend REST APIs built
+                            using Node.js and Express.
+                        </p>
+                        <div class="card-footer">
+                            <div class="author-info">
+                                <div class="author-avatar">BP</div>
+                                <span>Bhavik Pathak</span>
+                            </div>
+                            <a href="#" style="color: var(--primary); font-weight: 500;">Read Article &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 2 -->
+                <article class="blog-card" id="blog-card-2">
+                    <img src="images/express_backend.png" alt="Express Backend" class="card-banner">
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-tag">Express</span>
+                            <time datetime="2026-07-26">July 26, 2026</time>
+                            <span>&bull; 4 min read</span>
+                        </div>
+                        <h3 class="card-title">Building Scalable RESTful APIs with Node.js & Express</h3>
+                        <p class="card-excerpt">
+                            A step-by-step guide to structuring clean routes, middleware handlers, CORS configuration,
+                            and JSON endpoint logic.
+                        </p>
+                        <div class="card-footer">
+                            <div class="author-info">
+                                <div class="author-avatar">BP</div>
+                                <span>Bhavik Pathak</span>
+                            </div>
+                            <a href="#" style="color: var(--primary); font-weight: 500;">Read Article &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Card 3 -->
+                <article class="blog-card" id="blog-card-3">
+                    <img src="images/web_dev.png" alt="Frontend Interactions" class="card-banner">
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-tag">Frontend</span>
+                            <time datetime="2026-07-25">July 25, 2026</time>
+                            <span>&bull; 6 min read</span>
+                        </div>
+                        <h3 class="card-title">Designing Responsive UI Components with Semantic HTML5</h3>
+                        <p class="card-excerpt">
+                            Master semantic markup, navigation structures, and accessible form inputs to craft
+                            user-friendly web applications.
+                        </p>
+                        <div class="card-footer">
+                            <div class="author-info">
+                                <div class="author-avatar">BP</div>
+                                <span>Bhavik Pathak</span>
+                            </div>
+                            <a href="#" style="color: var(--primary); font-weight: 500;">Read Article &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="brand-logo">
+                    <span class="brand-icon">📝</span>
+                    BlogSphere
+                </a>
+                <p class="footer-desc">
+                    Simple Blog Management System built during the Full Stack Web Development Internship program.
                 </p>
-                <div class="btn-group">
-                    <button onclick="fetchAPI('/api')">GET /api</button>
-                    <button class="secondary" onclick="fetchAPI('/api/hello')">GET /api/hello</button>
-                    <button class="secondary" onclick="fetchAPI('/api/status')">GET /api/status</button>
-                </div>
-                <div class="console-output" id="output">Click an API endpoint button above to test server response...</div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Day 1 Checklist</span>
-                    <span class="icon">📋</span>
-                </div>
-                <ul class="checklist">
-                    <li class="checklist-item">
-                        <span class="check-icon">✓</span>
-                        VS Code, Node.js & Git setup
-                    </li>
-                    <li class="checklist-item">
-                        <span class="check-icon">✓</span>
-                        Initialize Project (`package.json`)
-                    </li>
-                    <li class="checklist-item">
-                        <span class="check-icon">✓</span>
-                        Install Express Framework
-                    </li>
-                    <li class="checklist-item">
-                        <span class="check-icon">✓</span>
-                        Create & Run Hello World Server
-                    </li>
-                    <li class="checklist-item">
-                        <span class="check-icon">✓</span>
-                        Initialize Git Repository & `.gitignore`
-                    </li>
+            <div>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link">Home Page</a></li>
+                    <li><a href="add-blog.html" class="footer-link">Add New Blog</a></li>
+                    <li><a href="about.html" class="footer-link">About Project</a></li>
+                    <li><a href="/api" class="footer-link" target="_blank">Express API (/api)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Developer</h4>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Bhavikpathak8" class="footer-link" target="_blank">GitHub
+                            Profile</a></li>
+                    <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
+                            target="_blank">GitHub Repository</a></li>
+                    <li><span class="footer-link">Day 2 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
-        <div class="card" style="margin-bottom: 2rem;">
-            <div class="card-header">
-                <span class="card-title">Postman & Submission Details</span>
-                <span class="icon">📮</span>
-            </div>
-            <p style="color: var(--text-sub); font-size: 0.95rem; line-height: 1.6;">
-                <strong>Test Endpoint:</strong> <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 0.3rem;">GET http://localhost:5000/api</code><br>
-                <strong>Expected Output:</strong> JSON response with status <code>"Success"</code> and Hello World message.<br>
-                <strong>Google Form Submission:</strong> You can submit your Git repository link or server screenshot as required by today's task.
-            </p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
+            <p>Designed with Semantic HTML5 & Custom CSS</p>
         </div>
+    </footer>
 
-        <footer>
-            Full Stack Web Development Internship &bull; Simple Blog Management System
-        </footer>
-    </div>
-
-    <script>
-        async function fetchAPI(endpoint) {
-            const output = document.getElementById('output');
-            output.innerText = `Fetching ${endpoint}...`;
-            try {
-                const response = await fetch(endpoint);
-                const data = await response.json();
-                output.innerText = JSON.stringify(data, null, 2);
-            } catch (err) {
-                output.innerText = `Error: ${err.message}`;
-            }
-        }
-
-        // Auto load /api status on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            fetchAPI('/api');
-        });
-    </script>
 </body>
+
 </html>

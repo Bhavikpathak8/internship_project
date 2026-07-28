@@ -53,12 +53,11 @@ This repository contains the setup for **Day 1** of the Full Stack Web Developme
 ---
 
 ### 📤 Google Form Submission Info
-- **GitHub Repository**: Initialized locally via `git init`. Push to GitHub using:
+- **GitHub Profile**: [Bhavikpathak8](https://github.com/Bhavikpathak8)
+- **GitHub Repository**: [internship_project](https://github.com/Bhavikpathak8/internship_project)
+- **Push to GitHub**:
   ```bash
-  git add .
-  git commit -m "Day 1 Complete: Express Hello World Server Setup"
-  git remote add origin <YOUR_GITHUB_REPO_URL>
-  git branch -M main
+  cd C:\Users\BHAVIKPATHAK\Desktop\blog-management-system
   git push -u origin main
   ```
 - **Task Outcome**: Express server runs successfully on port `5000`.
