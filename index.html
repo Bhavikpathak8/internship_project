@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Simple Blog Management System</title>
+    <title>Home | BlogSphere - Blog Management System</title>
     <meta name="description"
-        content="Day 2 Internship Task: Simple Blog Management System - Home page with navigation bar, blog grid, and footer.">
+        content="Day 3 Internship Task: Simple Blog Management System - Styled with CSS for Header, Navigation, Forms, Buttons, and Blog Cards.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=display"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
@@ -19,7 +19,7 @@
 
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (Header Styling - Day 3 Task) -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="brand-logo" id="nav-brand">
@@ -43,7 +43,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-badge">
-                <span>🚀</span> Full Stack Internship — Day 2 HTML Task
+                <span>🎨</span> Full Stack Internship — Day 3 CSS Tasks Completed
             </div>
             <h1 class="hero-title">Discover Tech Insights & Modern Full-Stack Ideas</h1>
             <p class="hero-desc">
@@ -52,7 +52,7 @@
             </p>
             <div class="hero-actions">
                 <a href="add-blog.html" class="btn btn-primary">Publish New Article</a>
-                <a href="#blog-posts" class="btn btn-secondary" style="margin-left: 0.75rem;">Explore Posts</a>
+                <a href="#blog-posts" class="btn btn-secondary">Explore Posts</a>
             </div>
         </section>
 
@@ -60,21 +60,24 @@
         <section id="blog-posts">
             <div class="section-header">
                 <h2 class="section-title">Latest Blog Articles</h2>
+                <!-- Category Filter Buttons (Button Styling - Day 3 Task) -->
                 <div class="categories">
-                    <span class="category-chip active">All</span>
-                    <span class="category-chip">Web Dev</span>
-                    <span class="category-chip">Backend</span>
-                    <span class="category-chip">Node.js</span>
-                    <span class="category-chip">Express</span>
+                    <button class="category-chip active">All</button>
+                    <button class="category-chip">Web Dev</button>
+                    <button class="category-chip">Backend</button>
+                    <button class="category-chip">Node.js</button>
+                    <button class="category-chip">Express</button>
                 </div>
             </div>
 
-            <!-- Blog Posts Grid -->
+            <!-- Blog Cards Grid (Blog Card Styling - Day 3 Task) -->
             <div class="blog-grid" id="posts-container">
 
                 <!-- Blog Card 1 -->
                 <article class="blog-card" id="blog-card-1">
-                    <img src="images/web_dev.png" alt="Web Development" class="card-banner">
+                    <div class="card-banner-wrapper">
+                        <img src="images/web_dev.png" alt="Web Development" class="card-banner">
+                    </div>
                     <div class="card-body">
                         <div class="card-meta">
                             <span class="card-tag">Web Dev</span>
@@ -89,16 +92,18 @@
                         <div class="card-footer">
                             <div class="author-info">
                                 <div class="author-avatar">BP</div>
-                                <span>Bhavik Pathak</span>
+                                <span class="author-name">Bhavik Pathak</span>
                             </div>
-                            <a href="#" style="color: var(--primary); font-weight: 500;">Read Article &rarr;</a>
+                            <a href="#" class="read-more-btn">Read Article <span>&rarr;</span></a>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Card 2 -->
                 <article class="blog-card" id="blog-card-2">
-                    <img src="images/express_backend.png" alt="Express Backend" class="card-banner">
+                    <div class="card-banner-wrapper">
+                        <img src="images/express_backend.png" alt="Express Backend" class="card-banner">
+                    </div>
                     <div class="card-body">
                         <div class="card-meta">
                             <span class="card-tag">Express</span>
@@ -113,16 +118,18 @@
                         <div class="card-footer">
                             <div class="author-info">
                                 <div class="author-avatar">BP</div>
-                                <span>Bhavik Pathak</span>
+                                <span class="author-name">Bhavik Pathak</span>
                             </div>
-                            <a href="#" style="color: var(--primary); font-weight: 500;">Read Article &rarr;</a>
+                            <a href="#" class="read-more-btn">Read Article <span>&rarr;</span></a>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Card 3 -->
                 <article class="blog-card" id="blog-card-3">
-                    <img src="images/web_dev.png" alt="Frontend Interactions" class="card-banner">
+                    <div class="card-banner-wrapper">
+                        <img src="images/web_dev.png" alt="Frontend Interactions" class="card-banner">
+                    </div>
                     <div class="card-body">
                         <div class="card-meta">
                             <span class="card-tag">Frontend</span>
@@ -137,9 +144,9 @@
                         <div class="card-footer">
                             <div class="author-info">
                                 <div class="author-avatar">BP</div>
-                                <span>Bhavik Pathak</span>
+                                <span class="author-name">Bhavik Pathak</span>
                             </div>
-                            <a href="#" style="color: var(--primary); font-weight: 500;">Read Article &rarr;</a>
+                            <a href="#" class="read-more-btn">Read Article <span>&rarr;</span></a>
                         </div>
                     </div>
                 </article>
@@ -178,14 +185,14 @@
                             Profile</a></li>
                     <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
                             target="_blank">GitHub Repository</a></li>
-                    <li><span class="footer-link">Day 2 Task — Completed</span></li>
+                    <li><span class="footer-link">Day 3 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
-            <p>Designed with Semantic HTML5 & Custom CSS</p>
+            <p>Styled with Custom CSS & Glassmorphism Aesthetics</p>
         </div>
     </footer>
 

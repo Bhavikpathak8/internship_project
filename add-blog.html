@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Blog | Simple Blog Management System</title>
+    <title>Add Blog | BlogSphere - Blog Management System</title>
     <meta name="description"
-        content="Day 2 Internship Task: Create New Blog Post Form page for Simple Blog Management System.">
+        content="Day 3 Internship Task: Create New Blog Post Form styled with custom CSS, modern inputs, dropdowns, and button states.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
 
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (Header Styling - Day 3 Task) -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="brand-logo" id="nav-brand">
@@ -40,10 +40,12 @@
 
     <!-- Main Content Area -->
     <main>
+        <!-- Form Section (Form & Button Styling - Day 3 Task) -->
         <section class="form-container">
             <div class="form-header">
                 <h1 class="form-title">Create New Blog Post</h1>
-                <p class="form-subtitle">Fill in the details below to add a new article to the Blog Management System.
+                <p class="form-subtitle">Fill in the details below to publish a new article on the Blog Management
+                    System.
                 </p>
             </div>
 
@@ -53,20 +55,20 @@
 
                     <!-- Blog Title -->
                     <div class="form-group full-width">
-                        <label for="blog-title">Blog Title *</label>
+                        <label for="blog-title">Blog Title <span class="required">*</span></label>
                         <input type="text" id="blog-title" name="title"
-                            placeholder="e.g., Master Express.js Routes & Middleware" required>
+                            placeholder="e.g., Master Express.js Routes & Middleware Architecture" required>
                     </div>
 
                     <!-- Author Name -->
                     <div class="form-group">
-                        <label for="blog-author">Author Name *</label>
+                        <label for="blog-author">Author Name <span class="required">*</span></label>
                         <input type="text" id="blog-author" name="author" placeholder="e.g., Bhavik Pathak" required>
                     </div>
 
                     <!-- Category Dropdown -->
                     <div class="form-group">
-                        <label for="blog-category">Category *</label>
+                        <label for="blog-category">Category <span class="required">*</span></label>
                         <select id="blog-category" name="category" required>
                             <option value="" disabled selected>Select category...</option>
                             <option value="Web Dev">Web Development</option>
@@ -81,30 +83,31 @@
                     <div class="form-group full-width">
                         <label for="blog-image">Banner Image URL</label>
                         <input type="url" id="blog-image" name="imageUrl"
-                            placeholder="https://images.unsplash.com/... or images/web_dev.png">
+                            placeholder="e.g., images/web_dev.png or https://images.unsplash.com/...">
+                        <span class="form-help">Provide a relative image path or direct image link.</span>
                     </div>
 
                     <!-- Short Excerpt / Summary -->
                     <div class="form-group full-width">
-                        <label for="blog-excerpt">Short Summary / Excerpt *</label>
+                        <label for="blog-excerpt">Short Summary / Excerpt <span class="required">*</span></label>
                         <input type="text" id="blog-excerpt" name="excerpt"
-                            placeholder="A concise 1-2 sentence overview of your post..." required>
+                            placeholder="A concise 1-2 sentence overview of your blog post..." required>
                     </div>
 
                     <!-- Full Blog Content -->
                     <div class="form-group full-width">
-                        <label for="blog-content">Full Blog Article Content *</label>
+                        <label for="blog-content">Full Article Content <span class="required">*</span></label>
                         <textarea id="blog-content" name="content"
-                            placeholder="Write your complete blog post content here using text or paragraphs..."
+                            placeholder="Write your complete blog post content here using paragraphs..."
                             required></textarea>
                     </div>
 
                 </div>
 
-                <!-- Form Action Buttons -->
+                <!-- Form Action Buttons (Button Styling - Day 3 Task) -->
                 <div class="form-actions">
-                    <button type="reset" class="btn btn-secondary">Reset Fields</button>
-                    <button type="submit" class="btn btn-primary">Publish Article</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    <button type="submit" class="btn btn-primary">🚀 Publish Article</button>
                 </div>
             </form>
         </section>
@@ -140,14 +143,14 @@
                             Profile</a></li>
                     <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
                             target="_blank">GitHub Repository</a></li>
-                    <li><span class="footer-link">Day 2 Task — Completed</span></li>
+                    <li><span class="footer-link">Day 3 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
-            <p>Designed with Semantic HTML5 & Custom CSS</p>
+            <p>Styled with Custom CSS & Glassmorphism Aesthetics</p>
         </div>
     </footer>
 
