@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Blog | BlogSphere - Blog Management System</title>
     <meta name="description"
-        content="Day 3 Internship Task: Create New Blog Post Form styled with custom CSS, modern inputs, dropdowns, and button states.">
+        content="Day 4 Internship Task: Create New Blog Post Form with client-side JavaScript validation, live feedback, character counters, and DOM events.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
 
 <body>
 
-    <!-- Navigation Bar (Header Styling - Day 3 Task) -->
+    <!-- Navigation Bar -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="brand-logo" id="nav-brand">
@@ -40,41 +40,42 @@
 
     <!-- Main Content Area -->
     <main>
-        <!-- Form Section (Form & Button Styling - Day 3 Task) -->
+        <!-- Form Section (Form Validation & JS Events - Day 4 Task) -->
         <section class="form-container">
             <div class="form-header">
                 <h1 class="form-title">Create New Blog Post</h1>
-                <p class="form-subtitle">Fill in the details below to publish a new article on the Blog Management
-                    System.
+                <p class="form-subtitle">Fill in the details below to publish a new article. Includes real-time
+                    JavaScript validation.
                 </p>
             </div>
 
-            <!-- Add Blog Form -->
-            <form id="create-blog-form" action="#" method="POST">
+            <!-- Add Blog Form (novalidate allows custom JS validation) -->
+            <form id="create-blog-form" action="#" method="POST" novalidate>
                 <div class="form-grid">
 
                     <!-- Blog Title -->
                     <div class="form-group full-width">
                         <label for="blog-title">Blog Title <span class="required">*</span></label>
                         <input type="text" id="blog-title" name="title"
-                            placeholder="e.g., Master Express.js Routes & Middleware Architecture" required>
+                            placeholder="e.g., Master Express.js Routes & Middleware Architecture">
                     </div>
 
                     <!-- Author Name -->
                     <div class="form-group">
                         <label for="blog-author">Author Name <span class="required">*</span></label>
-                        <input type="text" id="blog-author" name="author" placeholder="e.g., Bhavik Pathak" required>
+                        <input type="text" id="blog-author" name="author" placeholder="e.g., Bhavik Pathak">
                     </div>
 
                     <!-- Category Dropdown -->
                     <div class="form-group">
                         <label for="blog-category">Category <span class="required">*</span></label>
-                        <select id="blog-category" name="category" required>
+                        <select id="blog-category" name="category">
                             <option value="" disabled selected>Select category...</option>
                             <option value="Web Dev">Web Development</option>
                             <option value="Backend">Backend Architecture</option>
                             <option value="Node.js">Node.js</option>
                             <option value="Express">Express.js</option>
+                            <option value="Frontend">Frontend Dev</option>
                             <option value="General">General Tech</option>
                         </select>
                     </div>
@@ -91,20 +92,19 @@
                     <div class="form-group full-width">
                         <label for="blog-excerpt">Short Summary / Excerpt <span class="required">*</span></label>
                         <input type="text" id="blog-excerpt" name="excerpt"
-                            placeholder="A concise 1-2 sentence overview of your blog post..." required>
+                            placeholder="A concise 1-2 sentence overview of your blog post...">
                     </div>
 
                     <!-- Full Blog Content -->
                     <div class="form-group full-width">
                         <label for="blog-content">Full Article Content <span class="required">*</span></label>
                         <textarea id="blog-content" name="content"
-                            placeholder="Write your complete blog post content here using paragraphs..."
-                            required></textarea>
+                            placeholder="Write your complete blog post content here using paragraphs..."></textarea>
                     </div>
 
                 </div>
 
-                <!-- Form Action Buttons (Button Styling - Day 3 Task) -->
+                <!-- Form Action Buttons -->
                 <div class="form-actions">
                     <button type="reset" class="btn btn-secondary">Clear Form</button>
                     <button type="submit" class="btn btn-primary">🚀 Publish Article</button>
@@ -143,16 +143,19 @@
                             Profile</a></li>
                     <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
                             target="_blank">GitHub Repository</a></li>
-                    <li><span class="footer-link">Day 3 Task — Completed</span></li>
+                    <li><span class="footer-link">Day 4 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
-            <p>Styled with Custom CSS & Glassmorphism Aesthetics</p>
+            <p>Interactive DOM & JavaScript Form Validation</p>
         </div>
     </footer>
+
+    <!-- Client-side Script for Day 4 Form Validation & Events -->
+    <script src="script.js"></script>
 
 </body>
 

@@ -19,7 +19,7 @@
 
 <body>
 
-    <!-- Navigation Bar (Header Styling - Day 3 Task) -->
+    <!-- Navigation Bar -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="brand-logo" id="nav-brand">
@@ -47,16 +47,16 @@
             <h1 class="hero-title">About Simple Blog Management System</h1>
             <p class="hero-desc">
                 Developed as part of the Full Stack Web Development Internship to demonstrate clean code, RESTful API
-                architecture, HTML5 semantics, and custom professional CSS UI design.
+                architecture, HTML5 semantics, custom CSS UI design, and JavaScript form validation.
             </p>
         </section>
 
         <div
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.75rem; margin-bottom: 3.5rem;">
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem; margin-bottom: 3.5rem;">
             <div
-                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg); backdrop-filter: blur(14px);">
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg);">
                 <h3
-                    style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #a5b4fc;">
+                    style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--primary);">
                     Day 1 – Environment Setup</h3>
                 <p style="color: var(--text-secondary); font-size: 0.95rem;">
                     Configured VS Code, Node.js, Express server initialization, Git version control, and Postman API
@@ -65,9 +65,9 @@
             </div>
 
             <div
-                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg); backdrop-filter: blur(14px);">
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg);">
                 <h3
-                    style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #a5b4fc;">
+                    style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--primary);">
                     Day 2 – HTML & UI Structure</h3>
                 <p style="color: var(--text-secondary); font-size: 0.95rem;">
                     Crafted semantic HTML5 Home page, Add Blog page, responsive navigation bar, and multi-column footer
@@ -76,13 +76,24 @@
             </div>
 
             <div
-                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg); backdrop-filter: blur(14px);">
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg);">
                 <h3
-                    style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #a5b4fc;">
-                    Day 3 – CSS Tasks & Professional UI</h3>
+                    style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--primary);">
+                    Day 3 – Custom CSS & Lite UI</h3>
                 <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                    Styled sticky glassmorphic navigation header, blog card grids, interactive forms, inputs, and button
-                    micro-animations.
+                    Styled sticky navbar, responsive blog cards grid, modern form fields, buttons, and custom design
+                    tokens.
+                </p>
+            </div>
+
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border); padding: 1.85rem; border-radius: var(--radius-lg);">
+                <h3
+                    style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--primary);">
+                    Day 4 – JS Validation & DOM</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Implemented client-side form validation, error feedback, real-time counters, category filtering, and
+                    toast alerts.
                 </p>
             </div>
         </div>
@@ -130,16 +141,19 @@
                             Profile</a></li>
                     <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
                             target="_blank">GitHub Repository</a></li>
-                    <li><span class="footer-link">Day 3 Task — Completed</span></li>
+                    <li><span class="footer-link">Day 4 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
-            <p>Styled with Custom CSS & Glassmorphism Aesthetics</p>
+            <p>Interactive DOM & JavaScript Form Validation</p>
         </div>
     </footer>
+
+    <!-- Client-side Script -->
+    <script src="script.js"></script>
 
 </body>
 
