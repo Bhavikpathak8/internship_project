@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | BlogSphere - Blog Management System</title>
     <meta name="description"
-        content="Day 3 Internship Task: Simple Blog Management System - Styled with CSS for Header, Navigation, Forms, Buttons, and Blog Cards.">
+        content="Day 4 Internship Task: Simple Blog Management System - Form validation, dynamic DOM rendering, event handling, and interactive blog filtering.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
 
 <body>
 
-    <!-- Navigation Bar (Header Styling - Day 3 Task) -->
+    <!-- Navigation Bar -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="brand-logo" id="nav-brand">
@@ -43,7 +43,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-badge">
-                <span>🎨</span> Full Stack Internship — Day 3 CSS Tasks Completed
+                <span>⚡</span> Full Stack Internship — Day 4 JS Tasks Completed
             </div>
             <h1 class="hero-title">Discover Tech Insights & Modern Full-Stack Ideas</h1>
             <p class="hero-desc">
@@ -60,97 +60,20 @@
         <section id="blog-posts">
             <div class="section-header">
                 <h2 class="section-title">Latest Blog Articles</h2>
-                <!-- Category Filter Buttons (Button Styling - Day 3 Task) -->
+                <!-- Category Filter Buttons (Interactive DOM Event Handlers - Day 4 Task) -->
                 <div class="categories">
                     <button class="category-chip active">All</button>
                     <button class="category-chip">Web Dev</button>
                     <button class="category-chip">Backend</button>
                     <button class="category-chip">Node.js</button>
                     <button class="category-chip">Express</button>
+                    <button class="category-chip">Frontend</button>
                 </div>
             </div>
 
-            <!-- Blog Cards Grid (Blog Card Styling - Day 3 Task) -->
+            <!-- Blog Cards Grid (Dynamic JS DOM Rendering - Day 4 Task) -->
             <div class="blog-grid" id="posts-container">
-
-                <!-- Blog Card 1 -->
-                <article class="blog-card" id="blog-card-1">
-                    <div class="card-banner-wrapper">
-                        <img src="images/web_dev.png" alt="Web Development" class="card-banner">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="card-tag">Web Dev</span>
-                            <time datetime="2026-07-27">July 27, 2026</time>
-                            <span>&bull; 5 min read</span>
-                        </div>
-                        <h3 class="card-title">Getting Started with Full Stack Web Development</h3>
-                        <p class="card-excerpt">
-                            Learn how modern frontend interfaces communicate seamlessly with backend REST APIs built
-                            using Node.js and Express.
-                        </p>
-                        <div class="card-footer">
-                            <div class="author-info">
-                                <div class="author-avatar">BP</div>
-                                <span class="author-name">Bhavik Pathak</span>
-                            </div>
-                            <a href="#" class="read-more-btn">Read Article <span>&rarr;</span></a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Card 2 -->
-                <article class="blog-card" id="blog-card-2">
-                    <div class="card-banner-wrapper">
-                        <img src="images/express_backend.png" alt="Express Backend" class="card-banner">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="card-tag">Express</span>
-                            <time datetime="2026-07-26">July 26, 2026</time>
-                            <span>&bull; 4 min read</span>
-                        </div>
-                        <h3 class="card-title">Building Scalable RESTful APIs with Node.js & Express</h3>
-                        <p class="card-excerpt">
-                            A step-by-step guide to structuring clean routes, middleware handlers, CORS configuration,
-                            and JSON endpoint logic.
-                        </p>
-                        <div class="card-footer">
-                            <div class="author-info">
-                                <div class="author-avatar">BP</div>
-                                <span class="author-name">Bhavik Pathak</span>
-                            </div>
-                            <a href="#" class="read-more-btn">Read Article <span>&rarr;</span></a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Card 3 -->
-                <article class="blog-card" id="blog-card-3">
-                    <div class="card-banner-wrapper">
-                        <img src="images/web_dev.png" alt="Frontend Interactions" class="card-banner">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="card-tag">Frontend</span>
-                            <time datetime="2026-07-25">July 25, 2026</time>
-                            <span>&bull; 6 min read</span>
-                        </div>
-                        <h3 class="card-title">Designing Responsive UI Components with Semantic HTML5</h3>
-                        <p class="card-excerpt">
-                            Master semantic markup, navigation structures, and accessible form inputs to craft
-                            user-friendly web applications.
-                        </p>
-                        <div class="card-footer">
-                            <div class="author-info">
-                                <div class="author-avatar">BP</div>
-                                <span class="author-name">Bhavik Pathak</span>
-                            </div>
-                            <a href="#" class="read-more-btn">Read Article <span>&rarr;</span></a>
-                        </div>
-                    </div>
-                </article>
-
+                <!-- Blog cards rendered dynamically via script.js -->
             </div>
         </section>
     </main>
@@ -185,16 +108,19 @@
                             Profile</a></li>
                     <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
                             target="_blank">GitHub Repository</a></li>
-                    <li><span class="footer-link">Day 3 Task — Completed</span></li>
+                    <li><span class="footer-link">Day 4 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
-            <p>Styled with Custom CSS & Glassmorphism Aesthetics</p>
+            <p>Interactive DOM & JavaScript Form Validation</p>
         </div>
     </footer>
+
+    <!-- Client-side Script for Day 4 JavaScript Tasks -->
+    <script src="script.js"></script>
 
 </body>
 

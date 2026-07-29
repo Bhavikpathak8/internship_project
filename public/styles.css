@@ -1,6 +1,6 @@
 /* ==========================================================================
-   BlogSphere - Day 3: Master CSS Stylesheet (Attractive Lite Mode Theme)
-   Focus: Professional Light UI - Header, Forms, Buttons, Blog Cards, Layouts
+   BlogSphere - Day 3 & 4: Master CSS Stylesheet (Attractive Lite Mode Theme)
+   Focus: Professional Light UI - Header, Forms, Validation, Buttons, Cards
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -121,7 +121,7 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   3. HEADER & NAVIGATION BAR STYLING (DAY 3 TASK - LITE MODE)
+   3. HEADER & NAVIGATION BAR STYLING
    -------------------------------------------------------------------------- */
 .navbar {
     position: sticky;
@@ -228,12 +228,8 @@ a {
     opacity: 0.96;
 }
 
-.nav-btn:active {
-    transform: translateY(0);
-}
-
 /* --------------------------------------------------------------------------
-   4. FORM STYLING (DAY 3 TASK - LITE MODE)
+   4. FORM STYLING & DAY 4 VALIDATION FEEDBACK
    -------------------------------------------------------------------------- */
 .form-container {
     max-width: 780px;
@@ -288,13 +284,13 @@ a {
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
+    position: relative;
 }
 
 .form-group.full-width {
     grid-column: span 2;
 }
 
-/* Form Labels */
 label {
     font-family: var(--font-heading);
     font-size: 0.9rem;
@@ -343,11 +339,51 @@ textarea:focus {
     box-shadow: 0 0 0 4px var(--primary-glow);
 }
 
-/* Input Hover State */
-input:hover:not(:focus),
-select:hover:not(:focus),
-textarea:hover:not(:focus) {
-    border-color: var(--border-strong);
+/* DAY 4 VALIDATION STYLES: Input Error & Success States */
+input.input-error,
+select.input-error,
+textarea.input-error {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.18) !important;
+}
+
+input.input-success,
+select.input-success,
+textarea.input-success {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15) !important;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.825rem;
+    font-weight: 600;
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.char-counter {
+    font-size: 0.785rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    text-align: right;
+    font-weight: 500;
 }
 
 textarea {
@@ -356,7 +392,6 @@ textarea {
     line-height: 1.6;
 }
 
-/* Select Styling */
 select {
     cursor: pointer;
     appearance: none;
@@ -389,7 +424,7 @@ select option {
 }
 
 /* --------------------------------------------------------------------------
-   5. BUTTON STYLING (DAY 3 TASK - LITE MODE)
+   5. BUTTON STYLING
    -------------------------------------------------------------------------- */
 .btn {
     display: inline-flex;
@@ -409,7 +444,6 @@ select option {
     line-height: 1.2;
 }
 
-/* Primary Button */
 .btn-primary {
     background: var(--primary-gradient);
     color: white;
@@ -422,11 +456,6 @@ select option {
     opacity: 0.96;
 }
 
-.btn-primary:active {
-    transform: translateY(0);
-}
-
-/* Secondary Button */
 .btn-secondary {
     background: #ffffff;
     color: var(--text-secondary);
@@ -439,10 +468,6 @@ select option {
     color: var(--text-primary);
     border-color: var(--text-secondary);
     transform: translateY(-2px);
-}
-
-.btn-secondary:active {
-    transform: translateY(0);
 }
 
 /* Category Filter Chips / Buttons */
@@ -480,7 +505,7 @@ select option {
 }
 
 /* --------------------------------------------------------------------------
-   6. BLOG CARD STYLING (DAY 3 TASK - LITE MODE)
+   6. BLOG CARD STYLING & DELETE BUTTON (DAY 4 DOM)
    -------------------------------------------------------------------------- */
 .blog-grid {
     display: grid;
@@ -507,7 +532,6 @@ select option {
     box-shadow: var(--shadow-lg), var(--shadow-glow);
 }
 
-/* Card Banner Image */
 .card-banner-wrapper {
     position: relative;
     width: 100%;
@@ -527,7 +551,6 @@ select option {
     transform: scale(1.06);
 }
 
-/* Card Body */
 .card-body {
     padding: 1.6rem;
     display: flex;
@@ -582,7 +605,6 @@ select option {
     overflow: hidden;
 }
 
-/* Card Footer */
 .card-footer {
     display: flex;
     align-items: center;
@@ -618,24 +640,106 @@ select option {
     color: var(--text-primary);
 }
 
-.read-more-btn {
-    color: var(--primary);
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.875rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
+.delete-btn {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 0.35rem 0.65rem;
+    cursor: pointer;
     transition: var(--transition);
+    font-size: 0.9rem;
 }
 
-.read-more-btn:hover {
-    color: var(--primary-hover);
-    transform: translateX(4px);
+.delete-btn:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    transform: scale(1.05);
+}
+
+/* Empty State Card */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #ffffff;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius-xl);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
 /* --------------------------------------------------------------------------
-   7. MAIN LAYOUT & HERO SECTION (LITE MODE)
+   7. DAY 4 TOAST NOTIFICATION STYLING
+   -------------------------------------------------------------------------- */
+#toast-container {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+    min-width: 300px;
+    max-width: 420px;
+    background: #ffffff;
+    color: var(--text-primary);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-heading);
+    font-size: 0.925rem;
+    font-weight: 600;
+    border-left: 5px solid var(--primary);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-success {
+    border-left-color: #10b981;
+}
+
+.toast-error {
+    border-left-color: #ef4444;
+}
+
+.toast-info {
+    border-left-color: #3b82f6;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+.toast-close:hover {
+    color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   8. MAIN LAYOUT & HERO SECTION
    -------------------------------------------------------------------------- */
 main {
     flex: 1;
@@ -726,7 +830,7 @@ main {
 }
 
 /* --------------------------------------------------------------------------
-   8. FOOTER STYLING (LITE MODE)
+   9. FOOTER STYLING
    -------------------------------------------------------------------------- */
 footer {
     background: #ffffff;
@@ -800,7 +904,7 @@ footer {
 }
 
 /* --------------------------------------------------------------------------
-   9. RESPONSIVE MEDIA QUERIES
+   10. RESPONSIVE MEDIA QUERIES
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
     .hero-title {
