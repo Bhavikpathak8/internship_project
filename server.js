@@ -97,13 +97,16 @@ app.get('/api', (req, res) => {
     res.status(200).json({
         success: true,
         message: "BlogSphere RESTful API is active and running",
-        task: "Day 5 – Express.js GET and POST Routes",
+        task: "Day 6 – Add Blog Tasks: API to create posts & store in JavaScript array",
         internship: "Full Stack Web Development Internship",
         project: "Simple Blog Management System",
+        storageType: "In-Memory JavaScript Array (blogs[])",
+        totalBlogsInArray: blogs.length,
         endpoints: {
             getAllBlogs: "GET /api/blogs",
             getBlogById: "GET /api/blogs/:id",
             createBlog: "POST /api/blogs",
+            deleteBlog: "DELETE /api/blogs/:id",
             getCategories: "GET /api/categories",
             serverStatus: "GET /api/status"
         },
@@ -241,7 +244,10 @@ app.post('/api/blogs', (req, res) => {
     // Return 201 Created Status Response
     res.status(201).json({
         success: true,
-        message: "Blog post published successfully!",
+        message: "Blog post successfully created and stored in server JavaScript array!",
+        task: "Day 6 – Add Blog Tasks",
+        storage: "In-Memory JavaScript Array (blogs[])",
+        totalBlogsInArray: blogs.length,
         data: newBlog
     });
 });
