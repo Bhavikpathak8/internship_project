@@ -1,12 +1,11 @@
 /* ==========================================================================
-   BlogSphere - Day 4: JavaScript Tasks
-   Form Validation, DOM Manipulation, Event Handling & Dynamic Interactions
+   BlogSphere - Day 4 & Day 5: JavaScript & Express API Integration
+   Form Validation, DOM Manipulation, Event Handling & Express GET/POST APIs
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ----------------------------------------------------------------------
-    // 1. INITIALIZE & SEED LOCAL STORAGE POSTS
-    // ----------------------------------------------------------------------
+
+    // Default posts fallback dataset
     const defaultPosts = [
         {
             id: 101,
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Helper: Retrieve posts from LocalStorage or seed defaults
+    // Helper: LocalStorage Fallback
     function getStoredPosts() {
         const stored = localStorage.getItem('blogsphere_posts');
         if (!stored) {
@@ -57,41 +56,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Helper: Save posts to LocalStorage
     function savePosts(posts) {
         localStorage.setItem('blogsphere_posts', JSON.stringify(posts));
     }
 
     // ----------------------------------------------------------------------
-    // 2. HOMEPAGE BLOG CARDS & CATEGORY FILTERING (DOM & EVENTS)
+    // 1. HOMEPAGE BLOG CARDS & CATEGORY FILTERING (EXPRESS GET /api/blogs)
     // ----------------------------------------------------------------------
     const postsContainer = document.getElementById('posts-container');
     const categoryChips = document.querySelectorAll('.category-chip');
 
     if (postsContainer) {
-        renderBlogCards('All');
+        fetchAndRenderBlogs('All');
 
         // Attach Click Event Listeners to Category Filter Chips
         categoryChips.forEach(chip => {
             chip.addEventListener('click', (e) => {
-                // Remove active class from all chips
                 categoryChips.forEach(c => c.classList.remove('active'));
-
-                // Add active class to clicked chip
                 const target = e.currentTarget;
                 target.classList.add('active');
 
-                // Get category name
                 const category = target.textContent.trim();
-                renderBlogCards(category);
+                fetchAndRenderBlogs(category);
             });
         });
     }
 
-    // Render Blog Cards Dynamically into DOM
-    function renderBlogCards(filterCategory = 'All') {
+    // Fetch Posts from Express GET /api/blogs
+    async function fetchAndRenderBlogs(filterCategory = 'All') {
         if (!postsContainer) return;
-        const posts = getStoredPosts();
+        postsContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⏳</div>
+                <h3>Loading Articles from Express Server...</h3>
+            </div>
+        `;
+
+        try {
+            const url = filterCategory === 'All'
+                ? '/api/blogs'
+                : `/api/blogs?category=${encodeURIComponent(filterCategory)}`;
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+
+            if (result.success && Array.isArray(result.data)) {
+                renderBlogCards(result.data, filterCategory);
+                // Also update LocalStorage cache
+                savePosts(result.data);
+            } else {
+                renderBlogCards(getStoredPosts(), filterCategory);
+            }
+        } catch (error) {
+            console.warn('[Frontend API] Express server fetch failed, falling back to LocalStorage:', error);
+            renderBlogCards(getStoredPosts(), filterCategory);
+        }
+    }
+
+    // Render Blog Cards into DOM
+    function renderBlogCards(posts, filterCategory = 'All') {
+        if (!postsContainer) return;
         postsContainer.innerHTML = '';
 
         const filtered = filterCategory === 'All'
@@ -115,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'blog-card';
             card.id = `blog-card-${post.id}`;
 
-            const initials = post.author.split(' ').map(n => n[0]).join('').toUpperCase() || 'BP';
+            const initials = post.author ? post.author.split(' ').map(n => n[0]).join('').toUpperCase() : 'BP';
 
             card.innerHTML = `
                 <div class="card-banner-wrapper">
@@ -142,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             postsContainer.appendChild(card);
         });
 
-        // Attach event listeners for delete buttons
+        // Delete event handler
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -152,18 +181,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function deletePost(id, currentFilter) {
+    async function deletePost(id, currentFilter) {
         if (confirm('Are you sure you want to delete this blog post?')) {
+            try {
+                // Send DELETE HTTP Request to Express Server API
+                const response = await fetch(`/api/blogs/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showToast('🗑️ Blog post deleted successfully!', 'info');
+                } else {
+                    console.warn(`[Frontend API] Delete request returned status ${response.status}`);
+                }
+            } catch (err) {
+                console.warn('[Frontend API] Express DELETE failed, updating LocalStorage state:', err);
+            }
+
+            // Sync LocalStorage state
             let posts = getStoredPosts();
             posts = posts.filter(p => p.id !== id);
             savePosts(posts);
-            renderBlogCards(currentFilter);
-            showToast('Blog post deleted successfully', 'info');
+
+            // Re-render blog cards
+            fetchAndRenderBlogs(currentFilter);
         }
     }
 
     // ----------------------------------------------------------------------
-    // 3. DAY 4 TASK: ADD BLOG FORM VALIDATION & INTERACTION
+    // 2. DAY 4/5 ADD BLOG FORM VALIDATION & EXPRESS POST /api/blogs ROUTE
     // ----------------------------------------------------------------------
     const blogForm = document.getElementById('create-blog-form');
 
@@ -175,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const excerptInput = document.getElementById('blog-excerpt');
         const contentInput = document.getElementById('blog-content');
 
-        // Add Live Character Counters for Excerpt and Content
+        // Character Counters
         setupCharacterCounter(excerptInput, 150);
         setupCharacterCounter(contentInput, 1500);
 
@@ -193,10 +239,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Form Submission Event Listener
-        blogForm.addEventListener('submit', (e) => {
+        blogForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Run full form validation
+            // Client-side validation check
             const isTitleValid = validateField(titleInput);
             const isAuthorValid = validateField(authorInput);
             const isCategoryValid = validateField(categorySelect);
@@ -208,46 +254,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!isFormValid) {
                 showToast('⚠️ Please fix the highlighted errors before submitting.', 'error');
-                // Focus first invalid element
                 const firstInvalid = blogForm.querySelector('.input-error');
                 if (firstInvalid) firstInvalid.focus();
                 return;
             }
 
-            // Calculate estimated read time based on word count
-            const wordCount = contentInput.value.trim().split(/\s+/).length;
-            const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 180));
+            const submitBtn = blogForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn ? submitBtn.innerHTML : '🚀 Publish Article';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ Publishing to Express API...';
+            }
 
-            // Create New Blog Post Object
-            const newPost = {
-                id: Date.now(),
+            const blogPayload = {
                 title: titleInput.value.trim(),
                 author: authorInput.value.trim(),
                 category: categorySelect.value,
                 imageUrl: imageInput.value.trim() || 'images/web_dev.png',
                 excerpt: excerptInput.value.trim(),
-                content: contentInput.value.trim(),
-                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                readTime: `${readTimeMinutes} min read`
+                content: contentInput.value.trim()
             };
 
-            // Save to LocalStorage
-            const posts = getStoredPosts();
-            posts.unshift(newPost);
-            savePosts(posts);
+            try {
+                // Send POST Request to Express Server Route (Day 5 Task)
+                const response = await fetch('/api/blogs', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(blogPayload)
+                });
 
-            showToast('🎉 Blog post published successfully! Redirecting...', 'success');
+                const result = await response.json();
 
-            // Reset form and redirect to home after 1.5s
-            blogForm.reset();
-            clearValidationStates([titleInput, authorInput, categorySelect, imageInput, excerptInput, contentInput]);
+                if (response.ok && result.success) {
+                    showToast('🎉 Blog post published successfully to Express API! Redirecting...', 'success');
 
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1400);
+                    // Also sync with LocalStorage
+                    const posts = getStoredPosts();
+                    posts.unshift(result.data);
+                    savePosts(posts);
+
+                    blogForm.reset();
+                    clearValidationStates([titleInput, authorInput, categorySelect, imageInput, excerptInput, contentInput]);
+
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1400);
+                } else {
+                    const errorMsg = result.message || (result.errors ? result.errors.join(' ') : 'Failed to publish post');
+                    showToast(`⚠️ Server Validation Error: ${errorMsg}`, 'error');
+                }
+            } catch (err) {
+                console.warn('[Frontend API] Express POST failed, saving to LocalStorage fallback:', err);
+
+                // Fallback to client-side creation if backend offline
+                const fallbackPost = {
+                    id: Date.now(),
+                    ...blogPayload,
+                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                    readTime: '4 min read'
+                };
+
+                const posts = getStoredPosts();
+                posts.unshift(fallbackPost);
+                savePosts(posts);
+
+                showToast('🎉 Article saved locally! Redirecting...', 'success');
+                blogForm.reset();
+
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1400);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                }
+            }
         });
 
-        // Form Reset Listener
+        // Reset Event Listener
         blogForm.addEventListener('reset', () => {
             setTimeout(() => {
                 clearValidationStates([titleInput, authorInput, categorySelect, imageInput, excerptInput, contentInput]);
@@ -257,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 4. VALIDATION HELPER FUNCTIONS
+    // 3. VALIDATION HELPER FUNCTIONS
     // ----------------------------------------------------------------------
     function validateField(field) {
         if (!field) return true;
@@ -389,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 5. TOAST NOTIFICATION BANNER (DOM INTERACTION)
+    // 4. TOAST NOTIFICATION BANNER
     // ----------------------------------------------------------------------
     function showToast(message, type = 'info') {
         let toastContainer = document.getElementById('toast-container');
@@ -408,7 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         toastContainer.appendChild(toast);
 
-        // Trigger animation
         requestAnimationFrame(() => {
             toast.classList.add('show');
         });
@@ -430,7 +516,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
-    // Helper: HTML Escape
     function escapeHtml(str) {
         if (!str) return '';
         return str
