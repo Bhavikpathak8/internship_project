@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | BlogSphere - Blog Management System</title>
     <meta name="description"
-        content="Day 4 Internship Task: Simple Blog Management System - Form validation, dynamic DOM rendering, event handling, and interactive blog filtering.">
+        content="Day 7 Internship Task: Display all blog posts on the Home page with dynamic search filtering, category sorting, and full article view modal.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-badge">
-                <span>⚡</span> Full Stack Internship — Day 4 JS Tasks Completed
+                <span>📖</span> Full Stack Internship — Day 7 View Blogs Tasks Completed
             </div>
             <h1 class="hero-title">Discover Tech Insights & Modern Full-Stack Ideas</h1>
             <p class="hero-desc">
@@ -59,8 +59,23 @@
         <!-- Blog Posts Section -->
         <section id="blog-posts">
             <div class="section-header">
-                <h2 class="section-title">Latest Blog Articles</h2>
-                <!-- Category Filter Buttons (Interactive DOM Event Handlers - Day 4 Task) -->
+                <div>
+                    <h2 class="section-title">Latest Blog Articles</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">
+                        Browse all blog posts fetched dynamically from the Express backend server API.
+                    </p>
+                </div>
+
+                <!-- Live Search Box (Day 7 View Blogs Task) -->
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Search blogs by title, excerpt, or author..."
+                        aria-label="Search blogs">
+                </div>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="filter-bar">
                 <div class="categories">
                     <button class="category-chip active">All</button>
                     <button class="category-chip">Web Dev</button>
@@ -71,12 +86,22 @@
                 </div>
             </div>
 
-            <!-- Blog Cards Grid (Dynamic JS DOM Rendering - Day 4 Task) -->
+            <!-- Blog Cards Grid (Dynamic Express API Fetching - Day 7 Task) -->
             <div class="blog-grid" id="posts-container">
                 <!-- Blog cards rendered dynamically via script.js -->
             </div>
         </section>
     </main>
+
+    <!-- Full Article Reader Modal (Day 7 View Blogs Detail Modal) -->
+    <div class="modal-overlay" id="article-modal" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div id="modal-content-wrapper">
+                <!-- Dynamic Article View Content injected via script.js -->
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -108,18 +133,18 @@
                             Profile</a></li>
                     <li><a href="https://github.com/Bhavikpathak8/internship_project" class="footer-link"
                             target="_blank">GitHub Repository</a></li>
-                    <li><span class="footer-link">Day 4 Task — Completed</span></li>
+                    <li><span class="footer-link">Day 7 Task — Completed</span></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2026 BlogSphere &bull; Full Stack Web Development Internship</p>
-            <p>Interactive DOM & JavaScript Form Validation</p>
+            <p>Day 7 View Blogs & Article Reader Modal</p>
         </div>
     </footer>
 
-    <!-- Client-side Script for Day 4 JavaScript Tasks -->
+    <!-- Client-side Script for Day 7 View Blogs Tasks -->
     <script src="script.js"></script>
 
 </body>
