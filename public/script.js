@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------------------------
     const postsContainer = document.getElementById('posts-container');
     const categoryChips = document.querySelectorAll('.category-chip');
+    const searchInput = document.getElementById('search-input');
 
     if (postsContainer) {
         fetchAndRenderBlogs('All');
@@ -77,13 +78,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 target.classList.add('active');
 
                 const category = target.textContent.trim();
-                fetchAndRenderBlogs(category);
+                const searchQuery = searchInput ? searchInput.value.trim() : '';
+                fetchAndRenderBlogs(category, searchQuery);
             });
         });
+
+        // Day 7 Task: Live Search Event Listener
+        if (searchInput) {
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim();
+                const activeChip = document.querySelector('.category-chip.active');
+                const activeCategory = activeChip ? activeChip.textContent.trim() : 'All';
+
+                searchTimeout = setTimeout(() => {
+                    fetchAndRenderBlogs(activeCategory, query);
+                }, 250);
+            });
+        }
     }
 
-    // Fetch Posts from Express GET /api/blogs
-    async function fetchAndRenderBlogs(filterCategory = 'All') {
+    // Fetch Posts from Express GET /api/blogs (Day 7 View Blogs Task)
+    async function fetchAndRenderBlogs(filterCategory = 'All', searchQuery = '') {
         if (!postsContainer) return;
         postsContainer.innerHTML = `
             <div class="empty-state">
@@ -93,9 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         try {
-            const url = filterCategory === 'All'
-                ? '/api/blogs'
-                : `/api/blogs?category=${encodeURIComponent(filterCategory)}`;
+            let url = '/api/blogs?';
+            if (filterCategory && filterCategory !== 'All') {
+                url += `category=${encodeURIComponent(filterCategory)}&`;
+            }
+            if (searchQuery) {
+                url += `search=${encodeURIComponent(searchQuery)}&`;
+            }
 
             const response = await fetch(url);
 
@@ -106,33 +127,43 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (result.success && Array.isArray(result.data)) {
-                renderBlogCards(result.data, filterCategory);
-                // Also update LocalStorage cache
-                savePosts(result.data);
+                renderBlogCards(result.data, filterCategory, searchQuery);
+                if (!searchQuery && filterCategory === 'All') {
+                    savePosts(result.data);
+                }
             } else {
-                renderBlogCards(getStoredPosts(), filterCategory);
+                renderBlogCards(getStoredPosts(), filterCategory, searchQuery);
             }
         } catch (error) {
             console.warn('[Frontend API] Express server fetch failed, falling back to LocalStorage:', error);
-            renderBlogCards(getStoredPosts(), filterCategory);
+            renderBlogCards(getStoredPosts(), filterCategory, searchQuery);
         }
     }
 
     // Render Blog Cards into DOM
-    function renderBlogCards(posts, filterCategory = 'All') {
+    function renderBlogCards(posts, filterCategory = 'All', searchQuery = '') {
         if (!postsContainer) return;
         postsContainer.innerHTML = '';
 
-        const filtered = filterCategory === 'All'
+        let filtered = filterCategory === 'All'
             ? posts
             : posts.filter(p => p.category.toLowerCase() === filterCategory.toLowerCase());
+
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            filtered = filtered.filter(p =>
+                p.title.toLowerCase().includes(q) ||
+                p.excerpt.toLowerCase().includes(q) ||
+                p.author.toLowerCase().includes(q)
+            );
+        }
 
         if (filtered.length === 0) {
             postsContainer.innerHTML = `
                 <div class="empty-state">
                     <div class="empty-icon">📭</div>
                     <h3>No Blog Articles Found</h3>
-                    <p>No articles found for the "${filterCategory}" category yet.</p>
+                    <p>No articles found for ${searchQuery ? `search "${searchQuery}"` : `category "${filterCategory}"`}.</p>
                     <a href="add-blog.html" class="btn btn-primary btn-sm" style="margin-top: 1rem;">Create First Article</a>
                 </div>
             `;
@@ -147,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const initials = post.author ? post.author.split(' ').map(n => n[0]).join('').toUpperCase() : 'BP';
 
             card.innerHTML = `
-                <div class="card-banner-wrapper">
+                <div class="card-banner-wrapper" data-id="${post.id}" style="cursor: pointer;">
                     <img src="${post.imageUrl || 'images/web_dev.png'}" alt="${escapeHtml(post.title)}" class="card-banner" onerror="this.src='images/web_dev.png'">
                 </div>
                 <div class="card-body">
@@ -156,14 +187,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         <time datetime="${post.date}">${escapeHtml(post.date)}</time>
                         <span>&bull; ${post.readTime || '4 min read'}</span>
                     </div>
-                    <h3 class="card-title">${escapeHtml(post.title)}</h3>
+                    <h3 class="card-title" data-id="${post.id}" style="cursor: pointer;">${escapeHtml(post.title)}</h3>
                     <p class="card-excerpt">${escapeHtml(post.excerpt)}</p>
                     <div class="card-footer">
                         <div class="author-info">
                             <div class="author-avatar">${initials}</div>
                             <span class="author-name">${escapeHtml(post.author)}</span>
                         </div>
-                        <button class="delete-btn" data-id="${post.id}" title="Delete Post">🗑️</button>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <button class="read-more-btn" data-id="${post.id}" style="background: none; border: none; cursor: pointer;">Read Article &rarr;</button>
+                            <button class="delete-btn" data-id="${post.id}" title="Delete Post">🗑️</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -171,15 +205,93 @@ document.addEventListener('DOMContentLoaded', () => {
             postsContainer.appendChild(card);
         });
 
+        // Day 7 View Blogs Task: Open Article Modal on Card Title / Banner / Read More click
+        document.querySelectorAll('.card-title, .card-banner-wrapper, .read-more-btn').forEach(elem => {
+            elem.addEventListener('click', (e) => {
+                const postId = parseInt(e.currentTarget.getAttribute('data-id'));
+                if (postId) openArticleModal(postId, posts);
+            });
+        });
+
         // Delete event handler
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 const postId = parseInt(e.currentTarget.getAttribute('data-id'));
                 deletePost(postId, filterCategory);
             });
         });
     }
+
+    // Day 7 View Blogs Task: Article Reader Modal Functionality
+    const articleModal = document.getElementById('article-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalContentWrapper = document.getElementById('modal-content-wrapper');
+
+    async function openArticleModal(id, currentPostsList) {
+        if (!articleModal || !modalContentWrapper) return;
+
+        let article = currentPostsList ? currentPostsList.find(p => p.id === id) : null;
+
+        if (!article) {
+            try {
+                const response = await fetch(`/api/blogs/${id}`);
+                const result = await response.json();
+                if (result.success) article = result.data;
+            } catch (_) { }
+        }
+
+        if (!article) return;
+
+        const initials = article.author ? article.author.split(' ').map(n => n[0]).join('').toUpperCase() : 'BP';
+
+        modalContentWrapper.innerHTML = `
+            <div class="modal-article-header">
+                <span class="modal-article-tag">${escapeHtml(article.category)}</span>
+                <h2 class="modal-article-title">${escapeHtml(article.title)}</h2>
+                <div class="modal-article-meta">
+                    <div class="author-avatar" style="width: 28px; height: 28px; font-size: 0.75rem;">${initials}</div>
+                    <span><strong>${escapeHtml(article.author)}</strong></span>
+                    <span>&bull;</span>
+                    <time>${escapeHtml(article.date)}</time>
+                    <span>&bull;</span>
+                    <span>${escapeHtml(article.readTime || '4 min read')}</span>
+                </div>
+            </div>
+            <img src="${article.imageUrl || 'images/web_dev.png'}" alt="${escapeHtml(article.title)}" class="modal-article-image" onerror="this.src='images/web_dev.png'">
+            <div class="modal-article-body">
+                ${escapeHtml(article.content || article.excerpt)}
+            </div>
+        `;
+
+        articleModal.classList.add('active');
+        articleModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeArticleModal() {
+        if (!articleModal) return;
+        articleModal.classList.remove('active');
+        articleModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = 'auto';
+    }
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeArticleModal);
+    }
+
+    if (articleModal) {
+        articleModal.addEventListener('click', (e) => {
+            if (e.target === articleModal) closeArticleModal();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && articleModal && articleModal.classList.contains('active')) {
+            closeArticleModal();
+        }
+    });
 
     async function deletePost(id, currentFilter) {
         if (confirm('Are you sure you want to delete this blog post?')) {
