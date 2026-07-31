@@ -252,6 +252,74 @@ app.post('/api/blogs', (req, res) => {
     });
 });
 
+// PUT /api/blogs/:id - Edit / Update Existing Blog Post (Day 8 Task)
+app.put('/api/blogs/:id', (req, res) => {
+    const blogId = parseInt(req.params.id, 10);
+    const blogIndex = blogs.findIndex(b => b.id === blogId);
+
+    if (blogIndex === -1) {
+        return res.status(404).json({
+            success: false,
+            error: "Blog post not found",
+            requestedId: blogId
+        });
+    }
+
+    const { title, author, category, imageUrl, excerpt, content } = req.body;
+
+    // Validation Check
+    const errors = [];
+    if (!title || title.trim().length < 5) {
+        errors.push("Title is required and must be at least 5 characters long.");
+    }
+    if (!author || author.trim().length < 3) {
+        errors.push("Author name is required and must be at least 3 characters long.");
+    }
+    if (!category || category.trim().length === 0) {
+        errors.push("Category selection is required.");
+    }
+    if (!excerpt || excerpt.trim().length < 10) {
+        errors.push("Short excerpt/summary is required and must be at least 10 characters long.");
+    }
+    if (!content || content.trim().length < 20) {
+        errors.push("Full article content is required and must be at least 20 characters long.");
+    }
+
+    if (errors.length > 0) {
+        return res.status(400).json({
+            success: false,
+            message: "Validation failed.",
+            errors: errors
+        });
+    }
+
+    // Recalculate read time
+    const wordCount = content.trim().split(/\s+/).length;
+    const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 180));
+
+    // Update Blog Object
+    blogs[blogIndex] = {
+        ...blogs[blogIndex],
+        title: title.trim(),
+        author: author.trim(),
+        category: category.trim(),
+        imageUrl: imageUrl && imageUrl.trim() ? imageUrl.trim() : blogs[blogIndex].imageUrl,
+        excerpt: excerpt.trim(),
+        content: content.trim(),
+        readTime: `${readTimeMinutes} min read`,
+        updatedAt: new Date().toISOString()
+    };
+
+    console.log(`[Express API] Updated Blog Post ID: ${blogId} ("${blogs[blogIndex].title}")`);
+
+    res.status(200).json({
+        success: true,
+        message: "Blog post updated successfully!",
+        task: "Day 8 – Edit Blog Tasks",
+        data: blogs[blogIndex]
+    });
+});
+
 // DELETE /api/blogs/:id - Delete a blog post by ID
 app.delete('/api/blogs/:id', (req, res) => {
     const blogId = parseInt(req.params.id, 10);
