@@ -196,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <button class="read-more-btn" data-id="${post.id}" style="background: none; border: none; cursor: pointer;">Read Article &rarr;</button>
+                            <a href="add-blog.html?id=${post.id}" class="edit-btn" title="Edit Post" style="text-decoration: none;">✏️ Edit</a>
                             <button class="delete-btn" data-id="${post.id}" title="Delete Post">🗑️</button>
                         </div>
                     </div>
@@ -321,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 2. DAY 4/5 ADD BLOG FORM VALIDATION & EXPRESS POST /api/blogs ROUTE
+    // 2. DAY 4/5/8 ADD & EDIT BLOG FORM VALIDATION & EXPRESS API ROUTE
     // ----------------------------------------------------------------------
     const blogForm = document.getElementById('create-blog-form');
 
@@ -332,6 +333,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageInput = document.getElementById('blog-image');
         const excerptInput = document.getElementById('blog-excerpt');
         const contentInput = document.getElementById('blog-content');
+
+        // Check if editing existing post via URL query parameter ?id=... (Day 8 Task)
+        const urlParams = new URLSearchParams(window.location.search);
+        const editPostId = urlParams.get('id') ? parseInt(urlParams.get('id'), 10) : null;
+
+        if (editPostId) {
+            setupEditMode(editPostId);
+        }
+
+        async function setupEditMode(id) {
+            const formHeaderTitle = document.querySelector('.form-header h2');
+            const formHeaderDesc = document.querySelector('.form-header p');
+            const submitBtn = blogForm.querySelector('button[type="submit"]');
+
+            if (formHeaderTitle) formHeaderTitle.innerHTML = '✏️ Edit Blog Post';
+            if (formHeaderDesc) formHeaderDesc.innerHTML = 'Modify article details below and click update to save changes.';
+            if (submitBtn) submitBtn.innerHTML = '💾 Save & Update Article';
+
+            try {
+                const response = await fetch(`/api/blogs/${id}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const post = result.data;
+                    titleInput.value = post.title || '';
+                    authorInput.value = post.author || '';
+                    categorySelect.value = post.category || '';
+                    imageInput.value = post.imageUrl || '';
+                    excerptInput.value = post.excerpt || '';
+                    contentInput.value = post.content || '';
+                } else {
+                    // LocalStorage fallback pre-fill
+                    const posts = getStoredPosts();
+                    const post = posts.find(p => p.id === id);
+                    if (post) {
+                        titleInput.value = post.title || '';
+                        authorInput.value = post.author || '';
+                        categorySelect.value = post.category || '';
+                        imageInput.value = post.imageUrl || '';
+                        excerptInput.value = post.excerpt || '';
+                        contentInput.value = post.content || '';
+                    }
+                }
+            } catch (err) {
+                console.warn('[Frontend API] Could not fetch post for editing from Express server:', err);
+            }
+        }
 
         // Character Counters
         setupCharacterCounter(excerptInput, 150);
@@ -372,10 +420,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const submitBtn = blogForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn ? submitBtn.innerHTML : '🚀 Publish Article';
+            const originalBtnText = submitBtn ? submitBtn.innerHTML : (editPostId ? '💾 Save & Update Article' : '🚀 Publish Article');
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '⏳ Publishing to Express API...';
+                submitBtn.innerHTML = editPostId ? '⏳ Updating Article...' : '⏳ Publishing to Express API...';
             }
 
             const blogPayload = {
@@ -388,9 +436,12 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                // Send POST Request to Express Server Route (Day 5 Task)
-                const response = await fetch('/api/blogs', {
-                    method: 'POST',
+                const targetUrl = editPostId ? `/api/blogs/${editPostId}` : '/api/blogs';
+                const httpMethod = editPostId ? 'PUT' : 'POST';
+
+                // Send POST or PUT Request to Express Server Route (Day 5 & Day 8 Tasks)
+                const response = await fetch(targetUrl, {
+                    method: httpMethod,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -400,11 +451,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (response.ok && result.success) {
-                    showToast('🎉 Blog post published successfully to Express API! Redirecting...', 'success');
+                    const msg = editPostId
+                        ? '🎉 Blog post updated successfully! Redirecting...'
+                        : '🎉 Blog post published successfully to Express API! Redirecting...';
+                    showToast(msg, 'success');
 
                     // Also sync with LocalStorage
-                    const posts = getStoredPosts();
-                    posts.unshift(result.data);
+                    let posts = getStoredPosts();
+                    if (editPostId) {
+                        posts = posts.map(p => p.id === editPostId ? { ...p, ...result.data } : p);
+                    } else {
+                        posts.unshift(result.data);
+                    }
                     savePosts(posts);
 
                     blogForm.reset();
@@ -414,22 +472,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = 'index.html';
                     }, 1400);
                 } else {
-                    const errorMsg = result.message || (result.errors ? result.errors.join(' ') : 'Failed to publish post');
+                    const errorMsg = result.message || (result.errors ? result.errors.join(' ') : 'Failed to save post');
                     showToast(`⚠️ Server Validation Error: ${errorMsg}`, 'error');
                 }
             } catch (err) {
-                console.warn('[Frontend API] Express POST failed, saving to LocalStorage fallback:', err);
+                console.warn('[Frontend API] Express API request failed, saving to LocalStorage fallback:', err);
 
-                // Fallback to client-side creation if backend offline
-                const fallbackPost = {
-                    id: Date.now(),
-                    ...blogPayload,
-                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                    readTime: '4 min read'
-                };
-
-                const posts = getStoredPosts();
-                posts.unshift(fallbackPost);
+                // Fallback to client-side creation/update if backend offline
+                let posts = getStoredPosts();
+                if (editPostId) {
+                    posts = posts.map(p => p.id === editPostId ? { ...p, ...blogPayload } : p);
+                } else {
+                    const fallbackPost = {
+                        id: Date.now(),
+                        ...blogPayload,
+                        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                        readTime: '4 min read'
+                    };
+                    posts.unshift(fallbackPost);
+                }
                 savePosts(posts);
 
                 showToast('🎉 Article saved locally! Redirecting...', 'success');
