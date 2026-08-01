@@ -320,7 +320,7 @@ app.put('/api/blogs/:id', (req, res) => {
     });
 });
 
-// DELETE /api/blogs/:id - Delete a blog post by ID
+// DELETE /api/blogs/:id - Delete a blog post by ID (Day 9 Task)
 app.delete('/api/blogs/:id', (req, res) => {
     const blogId = parseInt(req.params.id, 10);
     const initialCount = blogs.length;
@@ -339,6 +339,7 @@ app.delete('/api/blogs/:id', (req, res) => {
     res.status(200).json({
         success: true,
         message: "Blog post deleted successfully!",
+        task: "Day 9 – Delete Blog Tasks",
         deletedId: blogId,
         remainingCount: blogs.length
     });
