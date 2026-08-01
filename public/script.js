@@ -194,10 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="author-avatar">${initials}</div>
                             <span class="author-name">${escapeHtml(post.author)}</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <button class="read-more-btn" data-id="${post.id}" style="background: none; border: none; cursor: pointer;">Read Article &rarr;</button>
-                            <a href="add-blog.html?id=${post.id}" class="edit-btn" title="Edit Post" style="text-decoration: none;">✏️ Edit</a>
-                            <button class="delete-btn" data-id="${post.id}" title="Delete Post">🗑️</button>
+                        <div class="card-actions">
+                            <button class="action-btn read-btn read-more-btn" data-id="${post.id}" title="Read Full Article">
+                                Read &rarr;
+                            </button>
+                            <a href="add-blog.html?id=${post.id}" class="action-btn edit-btn" title="Edit Article">
+                                ✏️ Edit
+                            </a>
+                            <button class="action-btn delete-btn" data-id="${post.id}" title="Delete Article">
+                                🗑️
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -206,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             postsContainer.appendChild(card);
         });
 
-        // Day 7 View Blogs Task: Open Article Modal on Card Title / Banner / Read More click
+        // Day 7 View Blogs Task: Open Article Modal on Card Title / Banner / Read button click
         document.querySelectorAll('.card-title, .card-banner-wrapper, .read-more-btn').forEach(elem => {
             elem.addEventListener('click', (e) => {
                 const postId = parseInt(e.currentTarget.getAttribute('data-id'));
