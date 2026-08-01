@@ -196,10 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="card-actions">
                             <button class="action-btn read-btn read-more-btn" data-id="${post.id}" title="Read Full Article">
-                                Read &rarr;
+                                👁️
                             </button>
                             <a href="add-blog.html?id=${post.id}" class="action-btn edit-btn" title="Edit Article">
-                                ✏️ Edit
+                                ✏️
                             </a>
                             <button class="action-btn delete-btn" data-id="${post.id}" title="Delete Article">
                                 🗑️
