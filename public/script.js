@@ -5,6 +5,21 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Day 10 Task: Connect HTML pages with Express APIs using Fetch API
+    checkApiConnection();
+
+    async function checkApiConnection() {
+        try {
+            const response = await fetch('/api/status');
+            if (response.ok) {
+                const status = await response.json();
+                console.log('[Day 10 Frontend Integration] Connected to Express REST API server via Fetch API:', status);
+            }
+        } catch (err) {
+            console.warn('[Day 10 Frontend Integration] Fetch API connection check to Express server failed:', err);
+        }
+    }
+
     // Default posts fallback dataset
     const defaultPosts = [
         {
