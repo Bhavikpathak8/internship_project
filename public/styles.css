@@ -519,7 +519,7 @@ select option {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: var(--transition-slow);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-md);
@@ -527,9 +527,9 @@ select option {
 }
 
 .blog-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     border-color: var(--border-hover);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    box-shadow: var(--shadow-lg), 0 12px 24px -8px rgba(79, 70, 229, 0.15);
 }
 
 .card-banner-wrapper {
@@ -1173,4 +1173,113 @@ footer {
         width: 100%;
         margin-left: 0 !important;
     }
+}
+
+/* --------------------------------------------------------------------------
+   11. DAY 11 UI/UX ANIMATIONS, KEYFRAMES & HOVER EFFECTS
+   -------------------------------------------------------------------------- */
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(124, 58, 237, 0.35);
+    }
+}
+
+@keyframes floatLogo {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* Card Entrance Staggering */
+.blog-card {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.blog-grid article:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.blog-grid article:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.blog-grid article:nth-child(3) {
+    animation-delay: 0.19s;
+}
+
+.blog-grid article:nth-child(4) {
+    animation-delay: 0.26s;
+}
+
+.blog-grid article:nth-child(5) {
+    animation-delay: 0.33s;
+}
+
+.blog-grid article:nth-child(6) {
+    animation-delay: 0.40s;
+}
+
+/* Enhanced Hover Interactions */
+.brand-logo-badge {
+    animation: floatLogo 4s ease-in-out infinite;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px -5px var(--primary-glow);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+.category-chip {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+.category-chip.active {
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.search-wrapper input:focus {
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    transform: translateY(-1px);
 }
