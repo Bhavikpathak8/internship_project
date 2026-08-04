@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             card.innerHTML = `
                 <div class="card-banner-wrapper" data-id="${post.id}" style="cursor: pointer;">
-                    <img src="${post.imageUrl || 'images/web_dev.png'}" alt="${escapeHtml(post.title)}" class="card-banner" onerror="this.src='images/web_dev.png'">
+                    <img src="${post.imageUrl || 'images/web_dev.png'}" alt="${escapeHtml(post.title)}" class="card-banner" loading="lazy" decoding="async" onerror="this.src='images/web_dev.png'">
                 </div>
                 <div class="card-body">
                     <div class="card-meta">
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>${escapeHtml(article.readTime || '4 min read')}</span>
                 </div>
             </div>
-            <img src="${article.imageUrl || 'images/web_dev.png'}" alt="${escapeHtml(article.title)}" class="modal-article-image" onerror="this.src='images/web_dev.png'">
+            <img src="${article.imageUrl || 'images/web_dev.png'}" alt="${escapeHtml(article.title)}" class="modal-article-image" loading="lazy" decoding="async" onerror="this.src='images/web_dev.png'">
             <div class="modal-article-body">
                 ${escapeHtml(article.content || article.excerpt)}
             </div>
