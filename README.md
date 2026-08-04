@@ -1,63 +1,102 @@
-# Day 1: Environment Setup & Express Hello World Server
-## Full Stack Web Development Internship — Simple Blog Management System
+# BlogSphere — Simple Blog Management System
+## Full Stack Web Development Internship Project (Days 1–14 Completed)
 
-### 📌 Overview
-This repository contains the setup for **Day 1** of the Full Stack Web Development Internship. The goal for Day 1 is to establish the development environment, initialize the project repository, configure an Express.js web server, and verify that the Hello World REST endpoint operates correctly.
-
----
-
-### 🚀 Tasks Completed
-1. ✅ **Environment Tools**: Verified installation & configuration for VS Code, Node.js, Git, and Postman.
-2. ✅ **Project Initialization**: Created project structure and initialized `package.json`.
-3. ✅ **Express Setup**: Installed `express`, `cors`, and `dotenv`.
-4. ✅ **Hello World Server**: Built `server.js` with Express GET endpoints responding with structured JSON data.
-5. ✅ **Interactive Tester**: Added modern frontend UI in `public/index.html` to easily test endpoints in browser.
-6. ✅ **Version Control**: Initialized Git repository with `.gitignore`.
-7. ✅ **Postman Integration**: Added `blog-api.postman_collection.json` ready for Postman import and testing.
+[![Live Website](https://img.shields.io/badge/Live_Site-GitHub_Pages-4f46e5?style=for-the-badge&logo=github)](https://bhavikpathak8.github.io/internship_project/)
+[![GitHub Repository](https://img.shields.io/badge/Repository-GitHub-10b981?style=for-the-badge&logo=github)](https://github.com/Bhavikpathak8/internship_project)
+[![Tech Stack](https://img.shields.io/badge/Stack-Node.js_|_Express_|_HTML5_|_CSS3_|_Vanilla_JS-7c3aed?style=for-the-badge)](https://github.com/Bhavikpathak8/internship_project)
 
 ---
 
-### 🛠️ How to Run the Project
+## 📌 Project Overview
+**BlogSphere** is a full-featured, responsive **Blog Management Web Application** engineered as part of the Full Stack Web Development Internship curriculum. It features a complete client-server architecture with an Express.js RESTful backend API and a dynamic HTML5/CSS3/Vanilla JavaScript frontend.
 
-1. **Navigate to project folder**:
+- 🌐 **Live Website**: [https://bhavikpathak8.github.io/internship_project/](https://bhavikpathak8.github.io/internship_project/)
+- 📦 **GitHub Repository**: [https://github.com/Bhavikpathak8/internship_project](https://github.com/Bhavikpathak8/internship_project)
+- 📮 **Postman API Collection**: Included in root directory as `blog-api.postman_collection.json`
+
+---
+
+## ✨ Key Features
+- 📝 **Full CRUD Operations**: Create, Read, Update (Edit), and Delete blog posts seamlessly.
+- ⚡ **Express REST API Backend**: Modular Express routes with JSON middleware and CORS support.
+- 🔍 **Live Search**: Instant client-side search filtering by title, excerpt, or author.
+- 🏷️ **Category Filtering**: Interactive category chips (Web Dev, Backend, Node.js, Express, Frontend).
+- 📖 **Article Reader Modal**: Read full blog posts in a focused modal overlay with keyboard shortcuts.
+- 🎨 **Modern Design & Animations**: Soft light theme, CSS keyframes, micro-interactions, and smooth scrolling.
+- 📱 **Fully Responsive Layout**: Mobile-first media queries optimized for smartphones, tablets, and desktops.
+- 🚀 **GitHub Pages Deployment**: Deployed and hosted live via GitHub Pages.
+
+---
+
+## 📡 REST API Documentation
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/status` | Backend server health check endpoint |
+| `GET` | `/api/blogs` | Fetch all blogs (supports `?category=` and `?search=`) |
+| `GET` | `/api/blogs/:id` | Fetch a single blog post by ID |
+| `GET` | `/api/categories` | Retrieve available blog categories |
+| `POST` | `/api/blogs` | Create a new blog post |
+| `PUT` | `/api/blogs/:id` | Edit/Update an existing blog post |
+| `DELETE` | `/api/blogs/:id` | Delete a blog post by ID |
+
+---
+
+## 🛠️ Technology Stack
+- **Frontend**: HTML5, CSS3 (Vanilla CSS with Custom Design System), Vanilla JavaScript (ES6+ Fetch API)
+- **Backend**: Node.js, Express.js, CORS, Dotenv
+- **Deployment & Hosting**: GitHub Pages, Git, GitHub
+
+---
+
+## 🚀 Local Setup & Installation
+
+1. **Clone the Repository**:
    ```bash
-   cd C:\Users\BHAVIKPATHAK\.gemini\antigravity\scratch\blog-management-system
+   git clone https://github.com/Bhavikpathak8/internship_project.git
+   cd internship_project
    ```
 
-2. **Install dependencies** *(if not already installed)*:
+2. **Install Dependencies**:
    ```bash
    npm install
    ```
 
-3. **Start the Express server**:
+3. **Start the Express Server**:
    ```bash
    npm start
    # or with nodemon auto-reload:
    npm run dev
    ```
 
-4. **Access in Browser / Postman**:
-   - Web App UI & Tester: `http://localhost:5000`
-   - Hello World API Endpoint: `http://localhost:5000/api`
-   - Greeting API Endpoint: `http://localhost:5000/api/hello`
-   - Server Health Check: `http://localhost:5000/api/status`
+4. **Access in Browser**:
+   - Web App UI: `http://localhost:5000`
+   - API Root: `http://localhost:5000/api/blogs`
 
 ---
 
-### 📮 Postman Verification Instructions
-1. Open **Postman**.
-2. Click **Import** -> Select `blog-api.postman_collection.json`.
-3. Execute `GET http://localhost:5000/api`.
-4. Confirm `200 OK` status and Hello World JSON payload.
+## 🗓️ Internship Development Timeline (Days 1–14)
+
+| Day | Task Milestone | Outcome |
+| :--- | :--- | :--- |
+| **Day 1** | Environment Setup & Express Server | Hello World Express server on port 5000 |
+| **Day 2** | HTML Structure & Core Pages | Built `index.html`, `add-blog.html`, `about.html` |
+| **Day 3** | CSS Styling & Theme Tokens | Implemented design system and CSS variables |
+| **Day 4** | JavaScript DOM & Form Validation | Built form handlers and local state |
+| **Day 5** | Express GET & POST API Endpoints | Implemented JSON payload routes |
+| **Day 6** | Create Blog Post Feature | POST endpoint connected to add-blog form |
+| **Day 7** | View Blogs & Reader Modal | Built blog grid, live search, and reader modal |
+| **Day 8** | Edit Blog Feature | Implemented `PUT /api/blogs/:id` and form pre-fill |
+| **Day 9** | Delete Blog Feature | Implemented `DELETE /api/blogs/:id` with toast alerts |
+| **Day 10** | Full Frontend Fetch API Integration | Connected all pages with Express backend APIs |
+| **Day 11** | Animations & Transitions | Added smooth scrolling and keyframe transitions |
+| **Day 12** | Git Management & GitHub Pages | Pushed repository and deployed site live |
+| **Day 13** | Responsiveness & Performance | Mobile media queries and image lazy loading |
+| **Day 14** | Documentation & Final Submission | Master README, submission package, and Form |
 
 ---
 
-### 📤 Google Form Submission Info
-- **GitHub Profile**: [Bhavikpathak8](https://github.com/Bhavikpathak8)
-- **GitHub Repository**: [internship_project](https://github.com/Bhavikpathak8/internship_project)
-- **Push to GitHub**:
-  ```bash
-  cd C:\Users\BHAVIKPATHAK\Desktop\blog-management-system
-  git push -u origin main
-  ```
-- **Task Outcome**: Express server runs successfully on port `5000`.
+## 📄 License & Student Information
+- **Developer**: Bhavik Pathak
+- **Repository**: [Bhavikpathak8/internship_project](https://github.com/Bhavikpathak8/internship_project)
+- **Course**: Full Stack Web Development Internship
