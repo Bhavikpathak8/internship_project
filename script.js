@@ -72,7 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function savePosts(posts) {
-        localStorage.setItem('blogsphere_posts', JSON.stringify(posts));
+        try {
+            localStorage.setItem('blogsphere_posts', JSON.stringify(posts));
+        } catch (e) {
+            console.warn('[LocalStorage] Unable to save posts cache:', e);
+        }
     }
 
     // ----------------------------------------------------------------------
