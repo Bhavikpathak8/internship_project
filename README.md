@@ -72,6 +72,9 @@
 4. **Access in Browser**:
    - Web App UI: `http://localhost:5000`
    - API Root: `http://localhost:5000/api/blogs`
+   - Health Check: `http://localhost:5000/api/status`
+
+> 💡 **Developer Tip**: The backend server automatically serves the static frontend from `/public` directory.
 
 ---
 
