@@ -444,6 +444,11 @@ select option {
     line-height: 1.2;
 }
 
+.btn:focus-visible {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
 .btn-primary {
     background: var(--primary-gradient);
     color: white;
