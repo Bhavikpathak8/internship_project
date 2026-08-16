@@ -119,6 +119,7 @@ app.get('/api/status', (req, res) => {
     res.status(200).json({
         success: true,
         status: "ONLINE",
+        environment: process.env.NODE_ENV || 'development',
         totalBlogs: blogs.length,
         uptime: `${Math.floor(process.uptime())} seconds`,
         nodeVersion: process.version,
