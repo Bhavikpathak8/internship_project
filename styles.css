@@ -508,6 +508,7 @@ select option {
     color: var(--primary);
     border-color: var(--primary-light);
     background: var(--primary-soft);
+    transform: translateY(-1px);
 }
 
 .category-chip.active {
