@@ -453,6 +453,10 @@ select option {
     outline-offset: 2px;
 }
 
+.btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
 .btn-primary {
     background: var(--primary-gradient);
     color: white;
