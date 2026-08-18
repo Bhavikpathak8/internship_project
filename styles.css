@@ -999,6 +999,7 @@ main {
     background: #ef4444;
     color: white;
     border-color: #ef4444;
+    transform: scale(1.08);
 }
 
 .modal-article-header {
