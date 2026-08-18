@@ -196,6 +196,7 @@ a {
     padding: 0.55rem 1.1rem;
     border-radius: var(--radius-full);
     transition: var(--transition);
+    letter-spacing: -0.01em;
 }
 
 .nav-link:hover {
