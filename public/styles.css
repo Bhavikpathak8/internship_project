@@ -610,7 +610,7 @@ select option {
 .card-excerpt {
     color: var(--text-secondary);
     font-size: 0.935rem;
-    line-height: 1.6;
+    line-height: 1.62;
     margin-bottom: 1.5rem;
     flex: 1;
     display: -webkit-box;
