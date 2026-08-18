@@ -855,6 +855,7 @@ main {
     font-weight: 700;
     margin-bottom: 1.5rem;
     transition: var(--transition-fast);
+    letter-spacing: 0.01em;
 }
 
 .hero-badge:hover {
