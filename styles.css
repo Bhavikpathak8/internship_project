@@ -246,6 +246,7 @@ a {
     box-shadow: var(--shadow-lg);
     position: relative;
     overflow: hidden;
+    transition: var(--transition);
 }
 
 .form-container::before {
