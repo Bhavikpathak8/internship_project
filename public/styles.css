@@ -920,6 +920,7 @@ main {
     transform: translateY(-50%);
     color: var(--text-muted);
     font-size: 0.95rem;
+    transition: var(--transition-fast);
 }
 
 #search-input {
