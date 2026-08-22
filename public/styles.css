@@ -684,6 +684,7 @@ select option {
     transition: all 0.2s ease;
     text-decoration: none;
     line-height: 1;
+    user-select: none;
 }
 
 .action-btn.read-btn {
