@@ -1114,6 +1114,7 @@ footer {
 .footer-link:hover {
     color: var(--primary);
     transform: translateX(3px);
+    opacity: 0.95;
 }
 
 .footer-bottom {
